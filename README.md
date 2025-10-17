@@ -7,7 +7,7 @@ A beautiful, interactive photo timeline web app with spiral animations, floating
 
 ## 📸 Screenshots
 
-![Timeline Demo](/screenshots/Screenshot 2025-10-16 at 11.15.36 PM.png)
+![Timeline Demo](screenshots/Screenshot 2025-10-16 at 11.15.36 PM.png)
 
 *Photos flow in a beautiful spiral with floating hearts, anniversary counter, and background music*
 
