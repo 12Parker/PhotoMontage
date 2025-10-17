@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Memory Spiral</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Anniversary Counter -->
+    <div class="anniversary-counter" id="anniversaryCounter">
+        <div class="counter-item">
+            <div class="counter-label">Dating</div>
+            <div class="counter-value" id="datingCounter">Loading...</div>
+        </div>
+        <div class="counter-divider">❤️</div>
+        <div class="counter-item">
+            <div class="counter-label">Married</div>
+            <div class="counter-value" id="marriedCounter">Loading...</div>
+        </div>
+    </div>
+
+    <!-- Floating Hearts Container -->
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <!-- Music Player -->
+    <div class="music-player" id="musicPlayer">
+        <button class="music-toggle" id="musicToggle">
+            <span class="play-icon">▶️</span>
+            <span class="pause-icon" style="display: none;">⏸️</span>
+        </button>
+        <div class="music-info">
+            <div class="music-title">All Your'n</div>
+        </div>
+    </div>
+    
+    <!-- Audio Element (hidden) -->
+    <audio id="backgroundMusic" loop>
+        <source src="All Your'n.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <div class="spiral-photo-trail" id="photoContainer"></div>
+    
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose">✕</button>
+            <img class="lightbox-image" id="lightboxImage" src="" alt="Full size photo">
+            <p class="lightbox-quote" id="lightboxQuote"></p>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
