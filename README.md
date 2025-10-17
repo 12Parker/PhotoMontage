@@ -5,6 +5,12 @@ A beautiful, interactive photo timeline web app with spiral animations, floating
 ![Timeline Demo](https://img.shields.io/badge/Status-Working-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
+## 📸 Screenshots
+
+![Timeline Demo](/screenshots/Screenshot 2025-10-16 at 11.15.36 PM.png)
+
+*Photos flow in a beautiful spiral with floating hearts, anniversary counter, and background music*
+
 ## ✨ Features
 
 - **🌀 Spiral Photo Animation** - Photos flow in a beautiful winding spiral path
