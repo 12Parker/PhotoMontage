@@ -4,54 +4,69 @@ Simple HTTP server to serve the timeline app locally.
 This avoids CORS issues when loading images from the file system.
 """
 
+import argparse
+import errno
 import http.server
-import socketserver
-import webbrowser
 import os
+import socketserver
 import sys
+import webbrowser
 
-PORT = 8000
+DEFAULT_PORT = 8000
+MAX_PORT_ATTEMPTS = 10
+
 
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
-        # Add CORS headers to allow loading local images
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         super().end_headers()
 
-def main():
-    # Change to the directory containing the timeline files
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    
-    global PORT
-    try:
-        with socketserver.TCPServer(("", PORT), CustomHTTPRequestHandler) as httpd:
-            print(f"🚀 Timeline server starting at http://localhost:{PORT}")
-            print("📸 Your photo timeline is now available!")
-            print("🔄 Press Ctrl+C to stop the server")
-            print("-" * 50)
-            
-            # Try to open the browser automatically
-            try:
-                webbrowser.open(f'http://localhost:{PORT}')
-                print("🌐 Browser opened automatically")
-            except:
-                print(f"🌐 Please open http://localhost:{PORT} in your browser")
-            
-            httpd.serve_forever()
-            
-    except KeyboardInterrupt:
-        print("\n👋 Server stopped. Thanks for using the Timeline app!")
-        sys.exit(0)
-    except OSError as e:
-        if e.errno == 48:  # Address already in use
-            print(f"❌ Port {PORT} is already in use. Trying port {PORT + 1}...")
-            PORT += 1
-            main()
-        else:
-            print(f"❌ Error starting server: {e}")
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Run local PhotoMontage server.')
+    parser.add_argument('--port', type=int, default=DEFAULT_PORT, help='Port to bind (default: 8000).')
+    parser.add_argument('--no-open', action='store_true', help='Do not auto-open a browser tab.')
+    return parser.parse_args()
+
+
+def run_server(start_port: int, open_browser: bool):
+    for offset in range(MAX_PORT_ATTEMPTS):
+        port = start_port + offset
+        try:
+            with socketserver.TCPServer(('', port), CustomHTTPRequestHandler) as httpd:
+                print(f'🚀 Timeline server starting at http://localhost:{port}')
+                print('📸 Your photo timeline is now available!')
+                print('🔄 Press Ctrl+C to stop the server')
+                print('-' * 50)
+
+                if open_browser:
+                    webbrowser.open(f'http://localhost:{port}')
+                    print('🌐 Browser opened automatically')
+                else:
+                    print(f'🌐 Open http://localhost:{port} in your browser')
+
+                httpd.serve_forever()
+                return
+        except OSError as error:
+            if error.errno == errno.EADDRINUSE and offset < MAX_PORT_ATTEMPTS - 1:
+                print(f'⚠️ Port {port} is already in use. Trying {port + 1}...')
+                continue
+            print(f'❌ Error starting server: {error}')
             sys.exit(1)
 
-if __name__ == "__main__":
+
+def main():
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    args = parse_args()
+
+    try:
+        run_server(args.port, not args.no_open)
+    except KeyboardInterrupt:
+        print('\n👋 Server stopped. Thanks for using the Timeline app!')
+        sys.exit(0)
+
+
+if __name__ == '__main__':
     main()
