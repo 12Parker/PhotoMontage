@@ -41,7 +41,7 @@ mkdir pictures
 
 ### 3. Update Photo List
 
-Edit `script.js` (lines 21-33) and replace the photo filenames with your own:
+Edit `config.js` and replace the photo filenames with your own:
 
 ```javascript
 photoFiles: [
@@ -54,21 +54,23 @@ photoFiles: [
 ### 4. Add Your Music (Optional)
 
 1. Place your song MP3 file in the root folder
-2. Edit `index.html` (line 39) to use your song:
+2. Edit `config.js` to use your song file and title:
 
-```html
-<source src="your-song.mp3" type="audio/mpeg">
+```javascript
+music: {
+    title: 'Your Song Title',
+    fileName: 'your-song.mp3',
+    volume: 0.3
+}
 ```
-
-3. Update the song title in `index.html` (line 33)
 
 ### 5. Update Anniversary Dates
 
-Edit `script.js` (lines 204-205) with your special dates:
+Edit `config.js` with your special dates:
 
 ```javascript
-const DATING_START = new Date('YYYY-MM-DD');
-const WEDDING_DATE = new Date('YYYY-MM-DD');
+datingStart: 'YYYY-MM-DD',
+weddingDate: 'YYYY-MM-DD',
 ```
 
 ### 6. Run the Server
@@ -77,7 +79,7 @@ const WEDDING_DATE = new Date('YYYY-MM-DD');
 python3 server.py
 ```
 
-Open your browser to `http://localhost:8001`
+Open your browser to `http://localhost:8000`
 
 ## 📁 File Structure
 
@@ -85,13 +87,14 @@ Open your browser to `http://localhost:8001`
 Timeline/
 ├── index.html              # Main HTML structure
 ├── styles.css              # All styling and animations
+├── config.js               # Central app configuration
 ├── script.js               # JavaScript logic
 ├── server.py               # Local Python server
 ├── .gitignore             # Git ignore rules
 ├── MUSIC_INSTRUCTIONS.md  # Music setup guide
 ├── pictures/              # Your photos (not tracked by git)
 │   └── *.jpg/png/jpeg
-└── your-song.mp3          # Your music (not tracked by git)
+└── your-song.mp3          # Your music (configure in config.js)
 ```
 
 ## 🎨 Customization
@@ -111,7 +114,7 @@ body {
 
 ### Adjust Animation Speed
 
-In `script.js` (line 19):
+In `config.js`:
 
 ```javascript
 animationDuration: 40,  // Change to speed up (20) or slow down (60)
@@ -130,7 +133,7 @@ In `styles.css` (lines 32-34):
 
 ### Add More Love Quotes
 
-Edit the `LOVE_QUOTES` array in `script.js` (lines 1-13).
+Edit the `loveQuotes` array in `config.js`.
 
 ## 🎵 Music Setup
 
@@ -165,12 +168,12 @@ The timeline is fully responsive and works great on:
 
 **Photos not showing?**
 - Check that photos are in the `pictures/` folder
-- Verify filenames in `script.js` match your files
+- Verify filenames in `config.js` match your files
 - Make sure server is running
 
 **Music not playing?**
 - Verify MP3 file is in the root folder
-- Check filename in `index.html` matches your file
+- Check `music.fileName` in `config.js` matches your file
 - Try clicking the play button (browsers require user interaction)
 
 **Anniversary counter not updating?**
